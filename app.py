@@ -24,13 +24,17 @@ def before_request():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(seconds=60)
     g.user = None
+    g.role = None
 
     if 'username' in session:
         g.user = session['username']
 
+    if 'role' in session:
+        g.role = session['role']
+
 @app.route('/')
 def index():
-    return render_template('index.html',user = g.user)
+    return render_template('index.html',user = g.user, role = g.role)
 
 
 @app.route('/login', methods = ["GET","POST"])
@@ -51,6 +55,7 @@ def login():
         if account:
             session['loggedin'] = True
             session['username'] = account[1]
+            session['role'] = account[5]
             # msg = 'Correct'
             if account[5] == 'admin':
                 return redirect(url_for('dashboard'))
