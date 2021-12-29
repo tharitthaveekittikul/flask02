@@ -4,10 +4,12 @@ from flask.helpers import url_for
 from flask_mysqldb import MySQL
 from werkzeug.utils import redirect
 from loginform import LoginForm
+from flask_qrcode import QRcode
 # from flask_bootstrap import Bootstrap
 import os
 
 app = Flask(__name__)
+
 
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
@@ -18,6 +20,7 @@ app.config['MYSQL_DB'] = 'flask'
 
 # Bootstrap(app)
 mysql = MySQL(app)
+QRcode(app)
 
 @app.before_request
 def before_request():
@@ -92,5 +95,18 @@ def about():
 @app.route('/contactprofile')
 def contactprofile():
     return render_template('contactprofile.html',user = g.user, role = g.role)
+
+@app.route('/contactprofile_2')
+def contactprofile_2():
+    return render_template('contactprofile_2.html',user = g.user, role = g.role)
+
+@app.route('/contactprofile_3')
+def contactprofile_3():
+    return render_template('contactprofile_3.html',user = g.user, role = g.role)
+    
+@app.route('/qr')
+def qr():
+    return render_template('qr.html')
+    
 if __name__ == "__main__":
     app.run(debug=True)
