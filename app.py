@@ -79,15 +79,18 @@ def logout():
 def dashboard():
     if not g.user:
         return redirect(url_for('login'))
-    return render_template('dashboard.html')
+    return render_template('dashboard.html',user = g.user, role = g.role)
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    return render_template('profile.html',user = g.user, role = g.role)
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
-
+    return render_template('about.html',user = g.user, role = g.role)
+    
+@app.route('/contactprofile')
+def contactprofile():
+    return render_template('contactprofile.html',user = g.user, role = g.role)
 if __name__ == "__main__":
     app.run(debug=True)

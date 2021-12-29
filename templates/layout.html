@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="">
+<head>
+<title>ชื่อเว็บโปรเจค</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="../static/index/layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<!-- contact -->
+<link rel="stylesheet" href="../static/about/contact/fonts/icomoon/style.css">
+<link rel="stylesheet" href="../static/about/contact/css/bootstrap.min.css">
+<link rel="stylesheet" href="../static/about/contact/css/style.css">
+<link rel="stylesheet" href="../static/about/nicepage.css" media="screen">
+<link rel="stylesheet" href="../static/about/Home.css" media="screen">
+<script class="u-script" type="text/javascript" src="../static/about/jquery.js" defer=""></script>
+<script class="u-script" type="text/javascript" src="../static/about/nicepage.js" defer=""></script>
+
+<!-- Profile -->
+<link rel="stylesheet" href="../static/profile/profile.css">
+
+</head>
+<body style="font-family: 'Kanit';">
+      <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{{url_for('index')}}">
+            <img src="../static/catlogo.png" alt="" style="width: 30px;height: 24px;" class="d-inline-block align-text-top">
+            <span style="font-size: 25px;">ชื่อเว็บโปรเจค</span>
+          </a>
+          {% if (user and role) %}
+            {% if role == "admin" %}
+              <div class="dropdown">
+                <a class="btn btn-outline-success dropbtn" href="{{url_for('dashboard')}}" style="font-size: 20px;">Hi {{ user }}</a>
+                <div class="dropdown-content">
+                  <a href="{{url_for('dashboard')}}">Dashboard</a>
+                  <a href="{{url_for('logout')}}">Logout</a>
+                </div>
+              </div>
+
+            {% elif role == "employee" %}
+            <div class="dropdown">
+              <a class="btn btn-outline-success dropbtn" href="#" style="font-size: 20px;">Hi {{ user }}</a>
+              <div class="dropdown-content">
+                <a href="#">Camera</a>
+                <a href="{{url_for('logout')}}">Logout</a>
+              </div>
+            </div>
+            {% endif %}
+          <!-- <a class="btn btn-outline-success dropdown-toggle" href="#" style="font-size: 20px;">Hi {{ user }}</a> -->
+          {% else %}
+            <p class="fl_right nospace"><a class="btn btn-outline-success" href="{{url_for('login')}}" style="font-size: 20px;">Login</a></p>
+          {% endif %}
+        </div>
+      </nav>
+      {% block content %}
+      {% endblock %}
+<a id="backtotop" href="#top"><i class="fas fa-chevron-up"></i></a>
+<!-- JAVASCRIPTS -->
+<script src="../static/index/layout/scripts/jquery.min.js"></script>
+<script src="../static/index/layout/scripts/jquery.backtotop.js"></script>
+<script src="../static/index/layout/scripts/jquery.mobilemenu.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<!-- profile -->
+<script src="../static/profile/profile.js"></script>
+
+<!-- contact -->
+<script src="../static/about/contact/js/jquery-3.3.1.min.js"></script>
+<script src="../static/about/contact/js/popper.min.js"></script>
+<script src="../static/about/contact/js/bootstrap.min.js"></script>
+<script src="../static/about/contact/js/jquery.validate.min.js"></script>
+<script src="../static/about/contact/js/main.js"></script>
+</body>
+</html>
