@@ -11,8 +11,9 @@
   width: 100%;
   color: #ffffff;
   text-align: left;
-  line-height: 1.4em;
+  line-height: 1.4rem;
   background-color: #141414;
+
 }
 .snip1336 * {
   -webkit-box-sizing: border-box;
@@ -27,7 +28,7 @@
 }
 .snip1336 figcaption {
   width: 100%;
-  background-color: #141414;
+  background-color: #ffffff;
   padding: 25px;
   position: relative;
 }
@@ -44,8 +45,8 @@
 }
 .snip1336 figcaption a {
   padding: 5px;
-  border: 1px solid #ffffff;
-  color: #ffffff;
+  border: 1px solid #050505;
+  color: #000000;
   font-size: 0.7em;
   text-transform: uppercase;
   margin: 10px 0;
@@ -101,9 +102,14 @@
   text-decoration: none;
   color: black;
   border-radius: 10px;
-  transition: background 0.5s;
+  /* transition: background 0.5s; */
 }
 
 .btn :hover {
   background : #dadada;
+  color: #141414;
+}
+
+.border{
+  border-color: #000000;
 }

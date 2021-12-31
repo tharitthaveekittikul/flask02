@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<section class="u-clearfix u-image u-valign-middle-lg u-section-1" id="carousel_6ea2" data-image-width="1920" data-image-height="1080">
+<section class="u-clearfix u-image u-valign-middle-lg u-section-1" id="carousel_6ea2" data-image-width="1920" data-image-height="1080" style="font-family: 'Kanit';">
   <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
     <div class="u-layout">
       <div class="u-layout-row">
@@ -23,39 +23,57 @@
 <section class="u-clearfix u-section-2" id="sec-dd36">
   <div class="u-clearfix u-sheet u-sheet-1">
     <div class="content">
-
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-8">
               <div class="row mb-5">
                 <div class="col-md-4 mr-auto">
-                  <h3 class="thin-heading mb-4">New York</h3>
+                  <h3 class="thin-heading mb-4">Bangkok</h3>
                   <p>9757 Aspen Lane
-    South Richmond Hill, NY 11419</p>
+                  South Richmond Hill, NY 11419</p>
                 </div>
                 <div class="col-md-6 ml-auto">
                   <h3 class="thin-heading mb-4">Contact Info</h3>
                   <p>T: +1 (291) 939 9321 <br> E: info@mywebsite.com</p>
                 </div>
               </div>
+              <section>
+                <div class="map-responsive">
+                  <!-- <center> -->
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248057.18773112874!2d100.49302611297256!3d13.724893621036056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d6032280d61f3%3A0x10100b25de24820!2z4LiB4Lij4Li44LiH4LmA4LiX4Lie4Lih4Lir4Liy4LiZ4LiE4Lij!5e0!3m2!1sth!2sth!4v1640872788992!5m2!1sth!2sth" width="1280" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                  <!-- </center> -->
+                </div>
+              </section>
     
               <div class="row justify-content-center">
                 <div class="col-md-12">
                   
                   <h3 class="thin-heading mb-4" id="contact_down">Message Us</h3>
-    
-                  <form class="mb-5" method="post" id="contactForm" name="contactForm">
+                  {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                      <ul class=flashes>
+                        {% for category, message in messages %}
+                          <!-- <li class="{{ category }}"> {{ message }}</li> -->
+                          <script type="text/javascript">
+                            swal({
+                              title: "{{ message }}",
+                              text: "Thank you for contact us.",
+                              icon: "{{ category }}",
+                            });
+                          </script>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  {% endwith %}
+                  <form class="mb-5" method="post" id="contactForm" name="contactForm" action="{{url_for('about')}}" >
                     <div class="row">
                       <div class="col-md-6 form-group">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Your name">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Your name" required >
                       </div>
                       <div class="col-md-6 form-group">
-                        <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12 form-group">
-                        <textarea class="form-control" name="message" id="message" cols="30" rows="2" placeholder="Write your message"></textarea>
+                        <textarea class="form-control" name="message" id="message" cols="30" rows="2" placeholder="Write your message" required></textarea>
                       </div>
                     </div>  
                     <div class="row">
@@ -65,19 +83,13 @@
                       </div>
                     </div>
                   </form>
-    
-                  <div id="form-message-warning mt-4"></div> 
-                  <div id="form-message-success">
-                    Your message was sent, thank you!
-                  </div>
-    
                 </div>
               </div>
             </div>
           </div>
-        </div>
-    
+        </section>
       </div>
   </div>
 </section>
+
 {% endblock %}

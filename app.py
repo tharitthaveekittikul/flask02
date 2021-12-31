@@ -1,14 +1,27 @@
 from datetime import timedelta
 from flask import Flask,render_template,request,session,g
-from flask.helpers import url_for
+from flask.helpers import flash, url_for
 from flask_mysqldb import MySQL
 from werkzeug.utils import redirect
-from loginform import LoginForm
+# from loginform import LoginForm
 from flask_qrcode import QRcode
 # from flask_bootstrap import Bootstrap
+from flask_mail import Mail, Message
 import os
 
+
 app = Flask(__name__)
+# Contact mail#########
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+# app.config['MAIL_USERNAME'] = "04076@pccl.ac.th"
+# app.config['MAIL_PASSWORD'] = "1104200235703"
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+#######################
 
 
 SECRET_KEY = os.urandom(32)
@@ -25,7 +38,7 @@ QRcode(app)
 @app.before_request
 def before_request():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(seconds=60)
+    app.permanent_session_lifetime = timedelta(minutes=60)
     g.user = None
     g.role = None
 
@@ -42,19 +55,19 @@ def index():
 
 @app.route('/login', methods = ["GET","POST"])
 def login():
-    form = LoginForm()
+    # form = LoginForm()
     msg = ''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        username = form.username.data
-        password = form.password.data
+        username = request.form['username']
+        password = request.form['password']
 
         cursor = mysql.connection.cursor()
-        cursor.execute('SELECT * FROM adminuser WHERE username = %s AND password = %s', (username,password))
+        cursor.execute('SELECT * FROM adminuser WHERE username = %s AND password = %s', (username,password,))
         
         account = cursor.fetchone()
-        # print(account)
-        mysql.connect.commit()
-        cursor.close()
+        print(account)
+        # mysql.connect.commit()
+        # cursor.close()
         if account:
             session['loggedin'] = True
             session['username'] = account[1]
@@ -63,13 +76,15 @@ def login():
             if account[5] == 'admin':
                 return redirect(url_for('dashboard'))
             elif account[5] == 'employee':
+                # return redirect(url_for(),next = request.form.get('next'))
                 return redirect(url_for('index'))
+                
 
         else:
             msg = 'Incorrect'
     if g.user:
         return redirect(url_for('dashboard'))
-    return render_template('login.html', form = form , msg = msg)
+    return render_template('login.html', msg = msg)
 
 
 @app.route('/logout')
@@ -88,10 +103,20 @@ def dashboard():
 def profile():
     return render_template('profile.html',user = g.user, role = g.role)
 
-@app.route('/about')
+@app.route('/about', methods = ["GET","POST"])
 def about():
+    if request.method == 'POST':
+        name = request.form["name"]
+        email = request.form["email"]
+        message = request.form['message']
+
+        msg = Message(name,sender=email, recipients=["04076@pccl.ac.th"])
+        msg.body = message + "from " + email
+        mail.send(msg)
+        flash('Message has been sent.', 'success')
+        return redirect(url_for('about'))
     return render_template('about.html',user = g.user, role = g.role)
-    
+
 @app.route('/contactprofile')
 def contactprofile():
     return render_template('contactprofile.html',user = g.user, role = g.role)
