@@ -113,7 +113,7 @@ def about():
         msg = Message(name,sender=email, recipients=["04076@pccl.ac.th"])
         msg.body = message + "from " + email
         mail.send(msg)
-        flash('Message has been sent.', 'success')
+        flash('Success', 'success')
         return redirect(url_for('about'))
     return render_template('about.html',user = g.user, role = g.role)
 
